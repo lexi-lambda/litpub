@@ -1,10 +1,19 @@
 #lang racket/base
 
 (require racket/runtime-path
+         racket/unit
          web-server/servlet-env
          (prefix-in env: "environment.rkt")
-         (prefix-in errors: "handler/error.rkt")
-         "route.rkt")
+         "route-sig.rkt"
+         "route-unit.rkt"
+         "handler/error-sig.rkt"
+         "handler/error-unit.rkt"
+         "handler/story-unit.rkt")
+
+(define-values/invoke-unit/infer
+  (export route^
+          (prefix errors: error^))
+  (link route@ error@ story@))
 
 (define-runtime-path public-path "public")
 

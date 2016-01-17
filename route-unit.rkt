@@ -1,9 +1,12 @@
-#lang racket/base
+#lang racket/unit
 
 (require web-server/dispatch
-         (prefix-in stories: "handler/story.rkt"))
 
-(provide server-dispatch server-url)
+         "route-sig.rkt"
+         "handler/story-sig.rkt")
+
+(import (prefix stories: story^))
+(export route^)
 
 (define-values [server-dispatch server-url]
   (dispatch-rules

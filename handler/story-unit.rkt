@@ -1,17 +1,18 @@
-#lang racket/base
+#lang racket/unit
 
 (require data/collection
          racket/function
-         racket/lazy-require
          web-server/http
-         (prefix-in errors: "error.rkt")
          "../model.rkt"
          "../template.rkt"
-         "../util/xexpr.rkt")
+         "../util/xexpr.rkt"
 
-(provide index show)
+         "../route-sig.rkt"
+         "error-sig.rkt"
+         "story-sig.rkt")
 
-(lazy-require ["../route.rkt" (server-url)])
+(import route^ (prefix errors: error^))
+(export story^)
 
 (define (index req)
   (define (list-stories stories)
