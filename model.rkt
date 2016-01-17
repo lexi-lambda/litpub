@@ -13,7 +13,7 @@
   (apply story (vector->immutable-vector vec)))
 
 (define (query-stories)
-  (map vector->story (query-rows db:connection "SELECT * FROM stories")))
+  (map vector->story (query-rows db:connection "SELECT * FROM stories ORDER BY updated_at ASC")))
 
 (define (query-story id)
   (and~>> (query-maybe-row db:connection "SELECT * FROM stories WHERE id = $1" id)
