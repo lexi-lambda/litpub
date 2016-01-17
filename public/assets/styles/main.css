@@ -21,6 +21,18 @@ p, li {
   margin-bottom: 1em;
 }
 
+ul {
+  list-style: none;
+}
+
+ul li::before {
+  content: '→';
+  font-size: 0.8em;
+  margin: 0 1em 0 0;
+  position: relative;
+  top: -0.05em;
+}
+
 hr {
   border: none;
   /*border-top: 1px solid #ddd;*/
