@@ -1,0 +1,61 @@
+.no-transitions * {
+  transition: none !important;
+}
+
+body {
+  font-family: Baskerville, serif;
+  font-size: 23px;
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 0;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Verdana, sans-serif;
+  font-weight: normal;
+}
+
+p, li {
+  line-height: 1.65;
+  margin-bottom: 1em;
+}
+
+hr {
+  border: none;
+  /*border-top: 1px solid #ddd;*/
+  margin: 50px 0 30px 0;
+  text-align: center;
+}
+
+hr::after {
+  background: #fff;
+  color: #333;
+  content: '◆◆◆';
+  font-size: 0.5em;
+  letter-spacing: 1em;
+  padding: 0 0.5em;
+  position: relative;
+  top: -0.72em;
+}
+
+a {
+  color: inherit;
+  font-family: Baskerville, serif;
+  text-decoration: none;
+  text-transform: lowercase;
+  transition: 0.2s color ease-in-out;
+}
+
+a:hover {
+  color: #2190CC;
+}
+
+.hanging-double-quote {
+  margin-left: -0.6em;
+}
+
+.content {
+  margin: 0 10.5rem;
+  padding: 3rem 0 0 0;
+}
