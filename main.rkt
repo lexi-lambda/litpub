@@ -2,6 +2,7 @@
 
 (require racket/runtime-path
          racket/unit
+         web-server/configuration/responders
          web-server/servlet-env
          (prefix-in env: "environment.rkt")
          "route-sig.rkt"
@@ -23,4 +24,8 @@
                #:listen-ip #f
                #:servlet-regexp #rx""
                #:extra-files-paths (list public-path)
-               #:file-not-found-responder errors:not-found)
+               #:file-not-found-responder errors:not-found
+               #:servlet-responder (case env:server-env
+                                     [(development) servlet-error-responder]
+                                     [(production)  errors:internal-server-error]
+                                     [else          (error "unknown environment ~v" env:server-env)]))

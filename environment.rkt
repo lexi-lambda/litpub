@@ -1,6 +1,7 @@
 #lang envy
 
 port : Positive-Integer
+server-env : Symbol #:default 'development
 
 database-url
 
