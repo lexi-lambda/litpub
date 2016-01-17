@@ -36,6 +36,7 @@
      (response/xexpr
       (page (story-title story)
             `((div [[class "content"]]
+                   (a [[class "pull-gutter"] [href ,(server-url index)]] "← Index")
                    (h1 ,(story-title story))
                    ,@(process-markdown (story-body story))))))]
     [else (redirect-to (server-url show id (story-slug story)))]))

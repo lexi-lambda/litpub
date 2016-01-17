@@ -58,4 +58,12 @@ a:hover {
 .content {
   margin: 0 10.5rem;
   padding: 3rem 0 0 0;
+  position: relative;
+}
+
+.pull-gutter {
+  left: -10rem;
+  margin-top: 2.7rem;
+  position: absolute;
+  width: 8.5rem;
 }
