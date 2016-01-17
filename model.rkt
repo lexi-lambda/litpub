@@ -7,7 +7,7 @@
 
 (provide (struct-out story) query-stories query-story story-slug)
 
-(struct story [id title body created-at updated-at draft?])
+(struct story [id title body draft? created-at updated-at])
 
 (define (vector->story vec)
   (apply story (vector->immutable-vector vec)))
