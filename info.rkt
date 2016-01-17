@@ -5,6 +5,7 @@
 (define deps
   '("base"
     "collections"
+    "curly-fn"
     "db-lib"
     "envy"
     "hyphenate"
