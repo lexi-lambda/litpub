@@ -7,5 +7,5 @@
 
 (define-values [server-dispatch server-url]
   (dispatch-rules
-   [("") stories:list]
+   [("") stories:index]
    [("stories" (integer-arg) (string-arg)) stories:show]))

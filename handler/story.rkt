@@ -9,11 +9,11 @@
          "../template.rkt"
          "../util/xexpr.rkt")
 
-(provide list show)
+(provide index show)
 
 (lazy-require ["../route.rkt" (server-url)])
 
-(define (list req)
+(define (index req)
   (define (list-stories stories)
     `(ul . ,(for/list ([story (in stories)])
               `(li (a [[href ,(server-url show (story-id story) (story-slug story))]]
