@@ -6,6 +6,7 @@ CREATE TABLE story_votes (
   ip inet NOT NULL,
   value binary_vote NOT NULL,
   created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now(),
   PRIMARY KEY (id),
   UNIQUE (story_id, ip)
 );

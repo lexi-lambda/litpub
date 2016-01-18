@@ -9,7 +9,7 @@
          (struct-out story-vote) create-story-vote!)
 
 (struct story [id title body draft? created-at updated-at] #:transparent)
-(struct story-vote [id story-id ip value created-at] #:transparent)
+(struct story-vote [id story-id ip value created-at updated-at] #:transparent)
 
 ;; stories
 (define (vector->story vec)
@@ -39,6 +39,6 @@ SQL
 INSERT INTO story_votes (story_id, ip, value)
 VALUES ($1, $2::text::inet, $3::text::binary_vote)
 ON CONFLICT (story_id, ip)
-DO UPDATE SET value = EXCLUDED.value
+DO UPDATE SET value = EXCLUDED.value, updated_at = now()
 SQL
               story-id ip value))
