@@ -5,11 +5,11 @@
          threading
          (prefix-in db: "db.rkt"))
 
-(provide (struct-out story) query-stories query-story story-slug story-sum-votes
-         (struct-out story-vote) create-or-update-story-vote!)
+(provide (struct-out story) query-stories query-story story-slug story-count-likes
+         (struct-out story-like) create-story-like! destroy-story-like!)
 
 (struct story [id title body draft? created-at updated-at] #:transparent)
-(struct story-vote [id story-id ip value created-at updated-at] #:transparent)
+(struct story-like [id story-id ip created-at updated-at] #:transparent)
 
 ;; stories
 (define (vector->story vec)
@@ -25,20 +25,19 @@
 (define (story-slug story)
   (regexp-replace* #rx"[^a-z]+" (string-downcase (story-title story)) "-"))
 
-(define (story-sum-votes story-id)
-  (query-value db:connection #<<SQL
-SELECT SUM(CASE WHEN value = 'up' THEN 1 ELSE -1 END)
-FROM story_votes
-WHERE story_id = $1
-SQL
-               story-id))
+(define (story-count-likes story-id)
+  (query-value db:connection "SELECT COUNT(*) FROM story_likes WHERE story_id = $1" story-id))
 
 ;; story_votes
-(define (create-or-update-story-vote! story-id ip value)
+(define (create-story-like! story-id ip)
   (query-exec db:connection #<<SQL
-INSERT INTO story_votes (story_id, ip, value)
-VALUES ($1, $2::text::inet, $3::text::binary_vote)
-ON CONFLICT (story_id, ip)
-DO UPDATE SET value = EXCLUDED.value, updated_at = now()
+INSERT INTO story_likes (story_id, ip)
+VALUES ($1, $2::text::inet)
+ON CONFLICT (story_id, ip) DO NOTHING
 SQL
-              story-id ip value))
+              story-id ip))
+
+(define (destroy-story-like! story-id ip)
+  (query-exec db:connection
+              "DELETE FROM story_likes WHERE story_id = $1 AND ip = $2::text::inet"
+              story-id ip))

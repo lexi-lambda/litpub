@@ -1,3 +1,4 @@
 #lang racket/signature
 
-story-votes:create
+story-likes:create
+story-likes:destroy

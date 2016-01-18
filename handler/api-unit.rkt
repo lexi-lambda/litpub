@@ -1,8 +1,6 @@
 #lang racket/unit
 
-(require json
-         web-server/http
-         "../model.rkt"
+(require "../model.rkt"
          "../util/client-ip.rkt"
          "../util/jsexpr.rkt"
          
@@ -11,12 +9,15 @@
 (import)
 (export api^)
 
-(define (story-votes:create req)
-  (let* ([payload (bytes->jsexpr (request-post-data/raw req))]
-         [ip (client-ip req)]
-         [story-id (hash-ref payload 'story-id)]
-         [value (hash-ref payload 'value)])
-    (create-or-update-story-vote! story-id ip value)
+(define (story-likes:create req story-id)
+  (let ([ip (client-ip req)])
+    (create-story-like! story-id ip)
     (response/jsexpr #:code 201 #:message #"Created"
                      `#hasheq((status . "ok")
-                              (score . ,(story-sum-votes story-id))))))
+                              (score . ,(story-count-likes story-id))))))
+
+(define (story-likes:destroy req story-id)
+  (let ([ip (client-ip req)])
+    (destroy-story-like! story-id ip)
+    (response/jsexpr `#hasheq((status . "ok")
+                              (score . ,(story-count-likes story-id))))))

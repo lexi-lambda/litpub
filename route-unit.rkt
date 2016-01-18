@@ -15,4 +15,5 @@
    [("") stories:index]
    [("stories" (integer-arg) (string-arg)) stories:show]
 
-   [("api" "story-votes") #:method "post" api:story-votes:create]))
+   [("api" "stories" (integer-arg) "likes") #:method "post" api:story-likes:create]
+   [("api" "stories" (integer-arg) "likes") #:method "delete" api:story-likes:destroy]))
