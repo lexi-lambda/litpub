@@ -16,7 +16,7 @@
          [ip (client-ip req)]
          [story-id (hash-ref payload 'story-id)]
          [value (hash-ref payload 'value)])
-    (create-story-vote! story-id ip value)
+    (create-or-update-story-vote! story-id ip value)
     (response/jsexpr #:code 201 #:message #"Created"
                      `#hasheq((status . "ok")
                               (score . ,(story-sum-votes story-id))))))

@@ -6,7 +6,7 @@
          (prefix-in db: "db.rkt"))
 
 (provide (struct-out story) query-stories query-story story-slug story-sum-votes
-         (struct-out story-vote) create-story-vote!)
+         (struct-out story-vote) create-or-update-story-vote!)
 
 (struct story [id title body draft? created-at updated-at] #:transparent)
 (struct story-vote [id story-id ip value created-at updated-at] #:transparent)
@@ -34,7 +34,7 @@ SQL
                story-id))
 
 ;; story_votes
-(define (create-story-vote! story-id ip value)
+(define (create-or-update-story-vote! story-id ip value)
   (query-exec db:connection #<<SQL
 INSERT INTO story_votes (story_id, ip, value)
 VALUES ($1, $2::text::inet, $3::text::binary_vote)
