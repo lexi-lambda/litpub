@@ -50,10 +50,12 @@
                              (span [[class "dateline subdued"] [style "line-height: 2em"]]
                                    ,(date->string (sql-datetime->srfi-date (story-created-at story))
                                                   "~B ~e, ~Y")))
-                        (a [[href "#"] [class ,(string-append "toggle-button toggle-button--icon"
-                                                              (if (story-liked? id ip)
-                                                                  "toggle-button--selected"
-                                                                  ""))]]
+                        (a [[href "#"]
+                            [class ,(string-append
+                                     "toggle-button toggle-button--icon story-like-button"
+                                     (if (story-liked? id ip) " toggle-button--selected" ""))]
+                            [data-story-id ,(~a id)]]
                            (i [[class "octicon-heart"]]))
-                        (span [[class "counter subdued"]] ,(~a (story-count-likes id))))))))]
+                        (span [[class "counter story-like-counter subdued"]]
+                              ,(~a (story-count-likes id))))))))]
     [else (redirect-to (server-url show id (story-slug story)))]))
