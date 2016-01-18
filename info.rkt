@@ -10,8 +10,9 @@
     "envy"
     "hyphenate"
     "markdown"
+    "srfi-lite-lib"
     "threading"
     "txexpr"
     "web-server-lib"))
 (define build-deps
-  '())
+  '("rackunit-lib"))
