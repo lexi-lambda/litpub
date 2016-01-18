@@ -8,6 +8,7 @@ body {
   margin: 0 auto;
   max-width: 1000px;
   padding: 0;
+  text-rendering: optimizeLegibility;
   width: 100%;
 }
 
@@ -110,9 +111,8 @@ a:hover {
 
 .counter, .dateline {
   font-family: 'Concourse C3';
-  -moz-font-feature-settings: 'ss10';
-  -webkit-font-feature-settings: 'ss10';
-  font-feature-settings: 'ss10';
+  -webkit-font-feature-settings: 'kern' 1, 'liga' 1, 'ss10';
+  font-feature-settings: 'kern' 1, 'liga' 1, 'ss10';
   text-transform: lowercase;
 }
 
