@@ -5,7 +5,8 @@
          threading
          (prefix-in db: "db.rkt"))
 
-(provide (struct-out story) query-stories query-story story-slug)
+(provide (struct-out story) query-stories query-story story-slug story-sum-votes
+         (struct-out story-vote) create-story-vote!)
 
 (struct story [id title body draft? created-at updated-at] #:transparent)
 (struct story-vote [id story-id ip value created-at] #:transparent)
@@ -34,5 +35,10 @@ SQL
 
 ;; story_votes
 (define (create-story-vote! story-id ip value)
-  (query-exec "INSERT INTO story_votes (story_id, ip, value) VALUES ($1, $2, $3)"
+  (query-exec db:connection #<<SQL
+INSERT INTO story_votes (story_id, ip, value)
+VALUES ($1, $2::text::inet, $3::text::binary_vote)
+ON CONFLICT (story_id, ip)
+DO UPDATE SET value = EXCLUDED.value
+SQL
               story-id ip value))
