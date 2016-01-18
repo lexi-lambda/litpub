@@ -35,7 +35,6 @@ ul li::before {
 
 hr {
   border: none;
-  /*border-top: 1px solid #ddd;*/
   margin: 50px 0 30px 0;
   text-align: center;
 }
@@ -73,9 +72,74 @@ a:hover {
   position: relative;
 }
 
+.after-content {
+  margin-bottom: 5rem;
+}
+
 .pull-gutter {
   left: -10rem;
   margin-top: 2.7rem;
   position: absolute;
   width: 8.5rem;
+}
+
+.toggle-button {
+  color: #666;
+}
+
+.toggle-button:hover {
+  color: #555;
+}
+
+.toggle-button--selected {
+  color: #B01950;
+}
+
+.toggle-button--selected:hover {
+  color: #D11F61;
+}
+
+.toggle-button--icon {
+  font-size: 1.5em;
+}
+
+.subdued {
+  color: #999;
+}
+
+.counter, .dateline {
+  font-family: 'Concourse C3';
+  -moz-font-feature-settings: 'ss10';
+  -webkit-font-feature-settings: 'ss10';
+  font-feature-settings: 'ss10';
+  text-transform: lowercase;
+}
+
+/* Icons */
+
+@font-face {
+  font-family: 'octicon-heart';
+  src: url('/assets/fonts/octicon-heart.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^='octicon-']:before,
+[class*=' octicon-']:before {
+  font-family: 'octicon-heart' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.octicon-heart:before {
+  content: '\e000';
+  margin-right: 0.2em;
+  position: relative;
+  top: 0.3em;
 }

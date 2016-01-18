@@ -1,10 +1,14 @@
 #lang racket/unit
 
 (require data/collection
+         db/util/datetime
+         racket/format
          racket/function
+         srfi/19
          web-server/http
          "../model.rkt"
          "../template.rkt"
+         "../util/client-ip.rkt"
          "../util/xexpr.rkt"
 
          "../route-sig.rkt"
@@ -30,6 +34,7 @@
 
 (define (show req id slug)
   (define story (query-story id))
+  (define ip (client-ip req))
   (cond
     [(not story) (errors:not-found req)]
     [(equal? slug (story-slug story))
@@ -38,5 +43,17 @@
             `((div [[class "content"]]
                    (a [[class "pull-gutter"] [href ,(server-url index)]] "← Index")
                    (h1 ,(story-title story))
-                   ,@(process-markdown (story-body story))))))]
+                   ,@(process-markdown (story-body story))
+                   (hr)
+                   (div [[class "after-content"]]
+                        (div [[style "float: right"]]
+                             (span [[class "dateline subdued"] [style "line-height: 2em"]]
+                                   ,(date->string (sql-datetime->srfi-date (story-created-at story))
+                                                  "~B ~e, ~Y")))
+                        (a [[href "#"] [class ,(string-append "toggle-button toggle-button--icon"
+                                                              (if (story-liked? id ip)
+                                                                  "toggle-button--selected"
+                                                                  ""))]]
+                           (i [[class "octicon-heart"]]))
+                        (span [[class "counter subdued"]] ,(~a (story-count-likes id))))))))]
     [else (redirect-to (server-url show id (story-slug story)))]))

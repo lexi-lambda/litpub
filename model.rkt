@@ -5,7 +5,7 @@
          threading
          (prefix-in db: "db.rkt"))
 
-(provide (struct-out story) query-stories query-story story-slug story-count-likes
+(provide (struct-out story) query-stories query-story story-slug story-liked? story-count-likes
          (struct-out story-like) create-story-like! destroy-story-like!)
 
 (struct story [id title body draft? created-at updated-at] #:transparent)
@@ -25,10 +25,18 @@
 (define (story-slug story)
   (regexp-replace* #rx"[^a-z]+" (string-downcase (story-title story)) "-"))
 
+(define (story-liked? story-id ip)
+  (not (zero? (query-value db:connection #<<SQL
+SELECT COUNT(*)
+FROM story_likes
+WHERE story_id = $1 AND ip = $2::text::inet
+SQL
+                           story-id ip))))
+
 (define (story-count-likes story-id)
   (query-value db:connection "SELECT COUNT(*) FROM story_likes WHERE story_id = $1" story-id))
 
-;; story_votes
+;; story_likes
 (define (create-story-like! story-id ip)
   (query-exec db:connection #<<SQL
 INSERT INTO story_likes (story_id, ip)
