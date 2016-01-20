@@ -6,10 +6,9 @@
          (prefix-in db: "db.rkt"))
 
 (provide (struct-out story) query-stories query-story story-slug story-liked? story-count-likes
-         (struct-out story-like) create-story-like! destroy-story-like!)
+         create-story-like! destroy-story-like! create-user-feedback!)
 
 (struct story [id title body draft? created-at updated-at] #:transparent)
-(struct story-like [id story-id ip created-at updated-at] #:transparent)
 
 ;; stories
 (define (vector->story vec)
@@ -49,3 +48,9 @@ SQL
   (query-exec db:connection
               "DELETE FROM story_likes WHERE story_id = $1 AND ip = $2::text::inet"
               story-id ip))
+
+;; user_feedback
+(define (create-user-feedback! ip body)
+  (query-exec db:connection
+              "INSERT INTO user_feedback (ip, body) VALUES ($1::text::inet, $2)"
+              ip body))
