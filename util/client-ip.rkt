@@ -21,7 +21,7 @@
     (or (and remote-addrs
              (not (empty? remote-addrs))
              (first remote-addrs))
-        (let ([forwarded-ips (and~>> (headers-assq #"HTTP_X_FORWARDED_FOR" raw-headers)
+        (let ([forwarded-ips (and~>> (headers-assq* #"X-Forwarded-For" raw-headers)
                                      header-value
                                      bytes->string/utf-8
                                      split-ip-addresses
@@ -74,24 +74,24 @@
       (request #"GET" (string->url "http://example.com") headers* (delay #f) #f "" 0 ip)))
 
   (check-equal? (client-ip (req '((#"REMOTE_ADDR" . #"1.2.3.4")
-                                  (#"HTTP_X_FORWARDED_FOR" . #"3.4.5.6"))))
+                                  (#"X-Forwarded-For" . #"3.4.5.6"))))
                 "1.2.3.4")
   (check-equal? (client-ip (req '((#"REMOTE_ADDR" . #"1.2.3.4")
-                                  (#"HTTP_X_FORWARDED_FOR" . #"unknown"))))
+                                  (#"X-Forwarded-For" . #"unknown"))))
                 "1.2.3.4")
   (check-equal? (client-ip (req '((#"REMOTE_ADDR" . #"127.0.0.1")
-                                  (#"HTTP_X_FORWARDED_FOR" . #"3.4.5.6"))))
+                                  (#"X-Forwarded-For" . #"3.4.5.6"))))
                 "3.4.5.6")
 
   (check-equal? (client-ip (req '((#"REMOTE_ADDR" . #"unix")
-                                  (#"HTTP_X_FORWARDED_FOR" . #"3.4.5.6"))))
+                                  (#"X-Forwarded-For" . #"3.4.5.6"))))
                 "3.4.5.6")
   (check-equal? (client-ip (req '((#"REMOTE_ADDR" . #"unix:/tmp/foo")
-                                  (#"HTTP_X_FORWARDED_FOR" . #"3.4.5.6"))))
+                                  (#"X-Forwarded-For" . #"3.4.5.6"))))
                 "3.4.5.6")
 
   (define-check (check-ip/forwarded-for input expected)
-    (check-equal? (client-ip (req `((#"HTTP_X_FORWARDED_FOR" . ,input)))) expected))
+    (check-equal? (client-ip (req `((#"X-Forwarded-For" . ,input)))) expected))
 
   (check-ip/forwarded-for #"unknown,3.4.5.6" "3.4.5.6")
   (check-ip/forwarded-for #"192.168.0.1,3.4.5.6" "3.4.5.6")
@@ -115,6 +115,6 @@
   (check-ip/forwarded-for #"8.8.8.8, fe80::202:b3ff:fe1e:8329" "fe80::202:b3ff:fe1e:8329")
   
 
-  (check-equal? (client-ip (req '((#"HTTP_X_FORWARDED_FOR" . #"1.1.1.1, 127.0.0.1"))
+  (check-equal? (client-ip (req '((#"X-Forwarded-For" . #"1.1.1.1, 127.0.0.1"))
                                 "1.1.1.1"))
                 "1.1.1.1"))
