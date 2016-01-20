@@ -27,6 +27,7 @@ JS
          (body [[class "no-transitions"]]
                ,@body
                (script [[src "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"]])
+               (script [[src "https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"]])
                (script [[src ,(asset-url "scripts/main.js")]])
                ,@(if google-analytics-tracking-id
                      `((script ,(format google-analytics-js google-analytics-tracking-id)))
