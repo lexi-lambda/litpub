@@ -13,9 +13,10 @@
 
          "../route-sig.rkt"
          "error-sig.rkt"
+         "feedback-sig.rkt"
          "story-sig.rkt")
 
-(import route^ (prefix errors: error^))
+(import route^ (prefix errors: error^) (prefix feedback: feedback^))
 (export story^)
 
 (define (index req)
@@ -26,7 +27,8 @@
   (let ([all-stories (query-stories)])
     (response/xexpr
      (page "Stories"
-           `((div [[class "content"]]
+           `((a [[href ,(server-url feedback:form)] [class "corner-link"]] "Feedback")
+             (div [[class "content"]]
                   (h1 "Stories")
                   ,(list-stories (filter (negate story-draft?) all-stories))
                   (h2 "Drafts & Works in Progress")
@@ -40,7 +42,8 @@
     [(equal? slug (story-slug story))
      (response/xexpr
       (page (story-title story)
-            `((div [[class "content"]]
+            `((a [[href ,(server-url feedback:form)] [class "corner-link"]] "Feedback")
+              (div [[class "content"]]
                    (a [[class "pull-gutter"] [href ,(server-url index)]] "← Index")
                    (h1 ,(story-title story))
                    ,@(process-markdown (story-body story))

@@ -64,6 +64,12 @@ a:hover {
   color: #D11F61;
 }
 
+.corner-link {
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+}
+
 .hanging-double-quote {
   margin-left: -0.6em;
 }
