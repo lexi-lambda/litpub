@@ -116,6 +116,44 @@ a:hover {
   text-transform: lowercase;
 }
 
+/* Forms */
+
+.content-form textarea {
+  border: 1px solid #000;
+  font-family: 'Equity Text';
+  font-size: 0.8em;
+  margin-bottom: 0.5rem;
+  min-height: 15rem;
+  padding: 1em;
+  transition: 0.2s border-color ease-in-out;
+  width: 100%;
+}
+
+.content-form textarea:focus {
+  border-color: #D11F61;
+  outline: none;
+}
+
+.content-button {
+  background: none;
+  border: 1px solid #000;
+  display: block;
+  cursor: pointer;
+  font-family: 'Concourse C3';
+  -webkit-font-feature-settings: 'kern' 1, 'liga' 1, 'ss10';
+  font-feature-settings: 'kern' 1, 'liga' 1, 'ss10';
+  font-size: 1.25em;
+  height: 2em;
+  text-transform: lowercase;
+  transition: 0.2s border-color ease-in-out, 0.2s color ease-in-out;
+  width: 100%;
+}
+
+.content-button:hover {
+  border-color: #D11F61;
+  color: #D11F61;
+}
+
 /* Icons */
 
 @font-face {
