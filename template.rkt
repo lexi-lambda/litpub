@@ -20,6 +20,7 @@ JS
 
 (define (page title body)
   `(html (head (meta [[charset "utf8"]])
+               (meta [[name "viewport"] [content "width=device-width, initial-scale=1"]])
                (title ,title)
                (link [[rel "stylesheet"]
                       [href ,(asset-url "styles/main.css")]]))

@@ -75,9 +75,15 @@ a:hover {
 }
 
 .content {
-  margin: 0 10.5rem;
+  margin: 0 1.5rem;
   padding: 3rem 0 0 0;
   position: relative;
+}
+
+@media (min-width: 800px) {
+  .content {
+    margin: 0 10.5rem;
+  }
 }
 
 .after-content {
@@ -85,10 +91,24 @@ a:hover {
 }
 
 .pull-gutter {
-  left: -10rem;
-  margin-top: 2.7rem;
-  position: absolute;
   width: 8.5rem;
+}
+
+.pull-gutter--top {
+  position: absolute;
+}
+
+@media (max-width: 799px) {
+  .pull-gutter--top {
+    top: 0.5em;
+  }
+}
+
+@media (min-width: 800px) {
+  .pull-gutter--top {
+    left: -10rem;
+    margin-top: 2.7rem;
+  }
 }
 
 .toggle-button {

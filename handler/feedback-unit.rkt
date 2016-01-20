@@ -7,7 +7,7 @@
          "../model.rkt"
          "../template.rkt"
          "../util/client-ip.rkt"
-         
+
          "../route-sig.rkt"
          "story-sig.rkt"
          "feedback-sig.rkt")
@@ -19,7 +19,8 @@
   (response/xexpr
    (page "Give Feedback"
          `((div [[class "content"]]
-                (a [[class "pull-gutter"] [href ,(server-url stories:index)]] "← Index")
+                (a [[class "pull-gutter pull-gutter--top"] [href ,(server-url stories:index)]]
+                  "← Index")
                 (h1 "Feedback")
                 (p "Have anything to say about the site or its content? Let me know here. If you "
                    "want a response, leave an email address or other handle, and I’ll get back to "
@@ -38,7 +39,8 @@
     (response/xexpr
      (page "Feedback Submitted"
            `((div [[class "content"]]
-                  (a [[class "pull-gutter"] [href ,(server-url stories:index)]] "← Index")
+                  (a [[class "pull-gutter pull-gutter--top"] [href ,(server-url stories:index)]]
+                    "← Index")
                   (h1 "Thank You For Your Feedback")
                   (p "Your feedback has been received! Thank you for your time. If you included any "
                      "identifying information, I’ll try and get back to you. Otherwise, just know "

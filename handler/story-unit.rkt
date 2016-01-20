@@ -44,7 +44,7 @@
       (page (story-title story)
             `((a [[href ,(server-url feedback:form)] [class "corner-link"]] "Feedback")
               (div [[class "content"]]
-                   (a [[class "pull-gutter"] [href ,(server-url index)]] "← Index")
+                   (a [[class "pull-gutter pull-gutter--top"] [href ,(server-url index)]] "← Index")
                    (h1 ,(story-title story))
                    ,@(process-markdown (story-body story))
                    (hr)
