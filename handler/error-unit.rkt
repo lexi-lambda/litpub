@@ -5,9 +5,10 @@
          
          "../route-sig.rkt"
          "error-sig.rkt"
+         "feedback-sig.rkt"
          "story-sig.rkt")
 
-(import route^ (prefix stories: story^))
+(import route^ (prefix stories: story^) (prefix feedback: feedback^))
 (export error^)
 
 (define (not-found req)
@@ -17,7 +18,10 @@
                                (h1 "404 Not Found")
                                (p "There’s nothing here! Sorry about that. If you’re lost, "
                                   (a [[href ,(server-url stories:index)]]
-                                     "here’s the way back to safety") "."))))))
+                                     "here’s the way back to safety") ".")
+                               (p "If you think there’s been a mistake, "
+                                  (a [[href ,(server-url feedback:form)]] "click here")
+                                  " to let me know!"))))))
 
 (define (internal-server-error url exn)
   ((error-display-handler) (exn-message exn) exn)
@@ -26,10 +30,9 @@
                         `((div [[class "content"]]
                                (h1 "Internal Server Error")
                                (p "Something blew up. Try reloading the page. If the problem "
-                                  "persists, contact "
-                                  (a [[href "mailto:lexi.lambda@gmail.com"]]
-                                     "lexi.lambda@gmail.com")
-                                  " and let me know what’s going on.")
+                                  "persists, "
+                                  (a [[href ,(server-url feedback:form)]] "click here")
+                                  " to let me know what’s going on.")
                                (p "Or, y’know, just try to go "
                                   (a [[href ,(server-url stories:index)]]
                                      "somewhere else") "."))))))
