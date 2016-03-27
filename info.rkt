@@ -15,4 +15,5 @@
     "txexpr"
     "web-server-lib"))
 (define build-deps
-  '("rackunit-lib"))
+  '("rackunit-lib"
+    "rackunit-spec"))
